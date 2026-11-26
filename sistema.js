@@ -1,3 +1,6 @@
+
+ // MISSÃO 1 - PROTÓTIPOS
+
 function ItemBase(nome) {
     this.nome = nome;
 }
@@ -7,9 +10,9 @@ ItemBase.prototype.gerarEtiqueta = function(numeroChamada) {
 };
 
 
+// MISSÃO 2 - ENCAPSULAMENTO
 
 class ContaCantina {
-
     #saldo;
 
     constructor(titular, saldoInicial) {
@@ -23,7 +26,7 @@ class ContaCantina {
 
     set saldo(valor) {
         if (valor < 0) {
-            console.log("ERRO: O saldo não pode ser negativo!");
+            console.log("Erro: saldo negativo não permitido!");
         } else {
             this.#saldo = valor;
         }
@@ -36,8 +39,10 @@ class ContaCantina {
 
 
 
-class ContaAluno extends ContaCantina {
+// MISSÃO 3 - HERANÇA E POLIMORFISMO
 
+
+class ContaAluno extends ContaCantina {
     constructor(titular, saldoInicial, turma) {
         super(titular, saldoInicial);
         this.turma = turma;
@@ -48,9 +53,7 @@ class ContaAluno extends ContaCantina {
     }
 }
 
-
 class ContaProfessor extends ContaCantina {
-
     constructor(titular, saldoInicial, disciplina) {
         super(titular, saldoInicial);
         this.disciplina = disciplina;
@@ -60,45 +63,50 @@ class ContaProfessor extends ContaCantina {
         if (valor < 100) {
             return 0;
         }
-
         return valor;
     }
 }
 
 
+// TESTES OBRIGATÓRIOS
 
-console.log("===== TESTES DO SISTEMA =====");
+console.log("===== SISTEMA DA CANTINA =====");
 
+// Teste 1 - Protótipo
 const item = new ItemBase("Salgado");
 
-console.log("\n1. ETIQUETA DO ITEM:");
+console.log("\nETIQUETA:");
 console.log(item.gerarEtiqueta(16));
 
 
-const aluno = new ContaAluno("Lucas Henrique", 200, "Turma A");
+// Teste 2 - Encapsulamento
+const aluno = new ContaAluno("SEU NOME COMPLETO", 200, "3º Ano");
 
-console.log("\n2. TESTE DO SALDO:");
-console.log("Saldo inicial:", aluno.saldo);
+console.log("\nSALDO DO ALUNO:");
+console.log("Saldo inicial: R$", aluno.saldo);
 
 aluno.saldo = -50;
 
-console.log("Saldo após tentativa:", aluno.saldo);
+console.log("Saldo após tentativa: R$", aluno.saldo);
+
+// aluno.#saldo;
+// Erro: atributos privados só podem ser acessados dentro da própria classe.
 
 
-
-const professor = new ContaProfessor("Professor", 500, "Programação");
-
-
-console.log("\n3. TESTE DE POLIMORFISMO:");
-
-const valor = 80;
-
-console.log("Valor original: R$", valor);
-console.log("Taxa do aluno com 20% de desconto: R$", aluno.calcularTaxa(valor));
-console.log("Taxa do professor (isento abaixo de R$ 100): R$", professor.calcularTaxa(valor));
+// Teste 3 - Herança
+const professor = new ContaProfessor("Professor da Cantina", 500, "Programação");
 
 
-console.log("\n4. TESTE COM VALOR DE R$ 150:");
+// Teste 4 - Polimorfismo
+console.log("\nPOLIMORFISMO:");
 
-console.log("Taxa do aluno: R$", aluno.calcularTaxa(150));
-console.log("Taxa do professor: R$", professor.calcularTaxa(150));
+console.log("Valor original: R$ 80");
+console.log("Aluno paga: R$", aluno.calcularTaxa(80));
+console.log("Professor paga: R$", professor.calcularTaxa(80));
+
+
+// Teste adicional
+console.log("\nTESTE COM R$ 150:");
+
+console.log("Aluno paga: R$", aluno.calcularTaxa(150));
+console.log("Professor paga: R$", professor.calcularTaxa(150));
